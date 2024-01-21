@@ -2,10 +2,9 @@ import {
 		SELECT_ALL_ENABLED, 
 		SELECT_ALL_LABEL, 
 		DESELECT_ALL_LABEL, 
-		SUPPORTED_BLOCKS, 
-		CHECKBOX_FIELD, 
-		SELECT_FIELD, 
-		ADD_AS_OPTION } from './constants';
+		SUPPORTED_BLOCKS,
+		ADD_AS_BUTTONS,
+		DEFAULT_ALL} from './constants';
 
 const { addFilter } = wp.hooks;
 const { createHigherOrderComponent } = wp.compose;
@@ -32,8 +31,6 @@ const addControls = createHigherOrderComponent( ( BlockEdit ) => {
 			isSelected,
 		} = props;
 
-		console.log( blockName, supportType,  attributes, attributes[ supportType ] );
-
 		if ( supportType !== 'all' && ! attributes[ supportType ] ) {
 			return ( <BlockEdit { ...props } /> );
 		}
@@ -50,7 +47,21 @@ const addControls = createHigherOrderComponent( ( BlockEdit ) => {
 						<Panel>
 							{ 
 							<PanelBody title="Select All" initialOpen={ false }>
-								
+								{ <PanelRow>
+										<ToggleControl
+											label="Select all by default"
+											help={
+												attributes[ DEFAULT_ALL ]
+													? 'All options will be selected by default'
+													: ''
+											}
+											checked={ attributes[ DEFAULT_ALL ] }
+											onChange={ () => {
+												setAttributes( { [ DEFAULT_ALL ] : ! attributes[ DEFAULT_ALL ] } );
+											} }
+										/>
+									</PanelRow> 
+								}
 								{ <PanelRow>
 										<ToggleControl
 											label="Enable 'Select All'"
@@ -69,15 +80,15 @@ const addControls = createHigherOrderComponent( ( BlockEdit ) => {
 								{ attributes[ SELECT_ALL_ENABLED ] &&
 									<PanelRow>
 										<ToggleControl
-											label="Add as option"
+											label="Add as buttons"
 											help={
-												attributes[ ADD_AS_OPTION ]
-													? 'The first option will be a "Select All" option'
-													: '"Select All" and "Deselect All" buttons will be added'
+												attributes[ ADD_AS_BUTTONS ]
+													? '"Select All" and "Deselect All" buttons will be added'
+													: 'The first option will be a "Select All" option'
 											}
-											checked={ attributes[ ADD_AS_OPTION ] }
+											checked={ attributes[ ADD_AS_BUTTONS ] }
 											onChange={ () => {
-												setAttributes( { [ ADD_AS_OPTION ] : ! attributes[ ADD_AS_OPTION ] } );
+												setAttributes( { [ ADD_AS_BUTTONS ] : ! attributes[ ADD_AS_BUTTONS ] } );
 											} }
 										/>
 									</PanelRow> 
@@ -94,7 +105,7 @@ const addControls = createHigherOrderComponent( ( BlockEdit ) => {
 										/>
 									</PanelRow> 
 								}
-								{ attributes[ SELECT_ALL_ENABLED ] && ! attributes[ ADD_AS_OPTION ] &&
+								{ attributes[ SELECT_ALL_ENABLED ] && attributes[ ADD_AS_BUTTONS ] &&
 									<PanelRow>
 										<TextControl
 											label="Deselect All label"
@@ -119,6 +130,6 @@ const addControls = createHigherOrderComponent( ( BlockEdit ) => {
 
 addFilter(
 	'editor.BlockEdit',
-	'jet-form-builder/update-fields',
+	'jfb-select-all-options/editor-controls',
 	addControls
 );

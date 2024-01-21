@@ -1,4 +1,4 @@
-import { SELECT_ALL_ENABLED, SELECT_ALL_LABEL, DESELECT_ALL_LABEL, SUPPORTED_BLOCKS, ADD_AS_OPTION } from './constants';
+import { SELECT_ALL_ENABLED, SELECT_ALL_LABEL, DESELECT_ALL_LABEL, SUPPORTED_BLOCKS, ADD_AS_BUTTONS, DEFAULT_ALL } from './constants';
 
 function registerAttributes( settings, name ) {
 
@@ -8,11 +8,15 @@ function registerAttributes( settings, name ) {
 
 	settings.attributes = {
 		...settings.attributes,
+		[ DEFAULT_ALL ]: {
+			type: 'boolean',
+			default: false,
+		},
 		[ SELECT_ALL_ENABLED ]: {
 			type: 'boolean',
 			default: false,
 		},
-		[ ADD_AS_OPTION ]: {
+		[ ADD_AS_BUTTONS ]: {
 			type: 'boolean',
 			default: false,
 		},

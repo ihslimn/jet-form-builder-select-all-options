@@ -257,7 +257,7 @@ function setInputWatcher( input ) {
 			return;
 		}
 		
-		if ( prev.length === maxNumber && hasAll( curr ) ) {
+		if ( prev?.length === maxNumber && hasAll( curr ) ) {
 			blockChange( input );
 			input.value.current = getValuesExceptAll( input.value.current );
 			return;

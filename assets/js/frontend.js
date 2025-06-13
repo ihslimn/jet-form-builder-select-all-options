@@ -18,7 +18,7 @@ addAction(
 
 		storeValues( input );
 
-		if ( input.nodes[0].closest( '[data-select-all-default="true"]' ) ) {
+		if ( input.nodes[0].closest( '[data-select-all-default="true"], [data-select-all-default="force"]' ) ) {
 			input.value.current = input.jfb_select_all.values;
 		}
 
@@ -33,6 +33,16 @@ addAction(
 
 		setInputWatcher( input );
 
+	}
+);
+
+addAction(
+	'jet.fbuf.input.updated',
+	'jfb-select-all-options/on-field-updater',
+	function( input, isCached ) {
+		if ( input.nodes[0].closest( '[data-select-all-default="force"]' ) && input?.jfb_select_all?.values?.length ) {
+			input.value.current = input.jfb_select_all.values
+		}
 	}
 );
 

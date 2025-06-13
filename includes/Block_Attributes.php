@@ -97,7 +97,11 @@ class Block_Attributes {
 		$args = $block->block_attrs;
 
 		if ( ! empty( $args['jfb_select_all_options_default_all_selected'] ) ) {
-			$block->add_attribute( 'data-select-all-default', 'true' );
+			if ( ! empty( $args['jfb_select_all_options_force_default_all_selected'] ) ) {
+				$block->add_attribute( 'data-select-all-default', 'force' );
+			} else {
+				$block->add_attribute( 'data-select-all-default', 'true' );
+			}
 		}
 
 		if ( empty( $args['jfb_select_all_options_enabled'] ) || $this->select_is_not_multiple( $args ) ) {

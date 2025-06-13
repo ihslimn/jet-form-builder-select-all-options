@@ -3,7 +3,7 @@
  * Plugin Name: JetFormBuilder - Select All Options
  * Plugin URI:  
  * Description: 
- * Version:     1.0.0
+ * Version:     1.0.1
  * Author:      Crocoblock
  * Author URI:  https://crocoblock.com/
  * Text Domain: jsf-store-filters

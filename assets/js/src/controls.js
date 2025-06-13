@@ -4,7 +4,9 @@ import {
 		DESELECT_ALL_LABEL, 
 		SUPPORTED_BLOCKS,
 		ADD_AS_BUTTONS,
-		DEFAULT_ALL} from './constants';
+		DEFAULT_ALL,
+		FORCE_DEFAULT_ALL,
+} from './constants';
 
 const { addFilter } = wp.hooks;
 const { createHigherOrderComponent } = wp.compose;
@@ -58,6 +60,18 @@ const addControls = createHigherOrderComponent( ( BlockEdit ) => {
 											checked={ attributes[ DEFAULT_ALL ] }
 											onChange={ () => {
 												setAttributes( { [ DEFAULT_ALL ] : ! attributes[ DEFAULT_ALL ] } );
+											} }
+										/>
+									</PanelRow> 
+								}
+								{ attributes[ DEFAULT_ALL ] &&
+									<PanelRow>
+										<ToggleControl
+											label="Force default value"
+											help='Enable this to ensure default value will be set after Field Updater update'
+											checked={ attributes[ FORCE_DEFAULT_ALL ] }
+											onChange={ () => {
+												setAttributes( { [ FORCE_DEFAULT_ALL ] : ! attributes[ FORCE_DEFAULT_ALL ] } );
 											} }
 										/>
 									</PanelRow> 
